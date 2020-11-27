@@ -68,36 +68,28 @@ def opdracht4():
 ## Opdracht 5
 def opdracht5():
 
-    
-    chechsum = "5f2a5c31a292cc46bacf546c961a8424"
+    URL = "http://185.115.217.205:1234"
 
-    applicatie = ["/static/opdracht5/applicatie_george.exe", 
-    "/static/opdracht5/applicatie_ivonne.exe",
-    "/static/opdracht5/applicatie_jef.exe",
-    "/static/opdracht5/applicatie_jos.exe",
-    "/static/opdracht5/applicatie_mariette.exe",
-    "/static/opdracht5/applicatie_odilon.exe"]
+    checksum = "5f2a5c31a292cc46bacf546c961a8424"
 
-    for x in applicatie:
-        hash = hashlib.md5()
-        if hash.hexdigest() == chechsum:
-            right_file = applicatie
-    
-    right_file_link =  "/static/opdracht5/" + right_file
-    x = requests.post(URL + "/opdracht6", json={"relatieve_url": right_file_link})
+    exes = ["/static/opdracht5/applicatie_jos.exe",
+            "/static/opdracht5/applicatie_jef.exe",
+            "/static/opdracht5/applicatie_odilon.exe",
+            "/static/opdracht5/applicatie_george.exe",
+            "/static/opdracht5/applicatie_mariette.exe",
+            "/static/opdracht5/applicatie_ivonne.exe"]
+
+    for file in exes:
+        application_name = file[18:]
+        hash_md5 = hashlib.md5()
+        with open(application_name, 'rb') as open_file:
+            content = open_file.read()
+            hash_md5.update(content)
+        if hash_md5.hexdigest() == checksum:
+            right_exe = application_name
+
+    x = requests.post(URL + "/opdracht6", json={"relatieve_url": right_exe})
     result = x.text
-    print(result)
- 
-
-    
-
-    # md5 =   {
-    #     "relatieve_url" : "/static/opdracht5/applicatie_george.exe"
-    # }
-
-    # x = requests.post(URL + "/opdracht6", json=md5)
-
-    # print(x.text)
 
 
 ## Opdracht 6
